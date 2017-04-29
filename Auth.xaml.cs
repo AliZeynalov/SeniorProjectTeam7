@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Wpf_doctor
+namespace Team7Senior
 {
     /// <summary>
     /// Interaction logic for Auth.xaml

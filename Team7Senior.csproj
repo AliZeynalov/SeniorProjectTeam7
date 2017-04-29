@@ -39,12 +39,12 @@
   <ItemGroup>
     <Reference Include="LightBuzz.Vitruvius, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Assemblies\WPF\LightBuzz.Vitruvius.dll</HintPath>
+      <HintPath>C:\Users\Ayşenur\Desktop\Kinect\LightBuzz.Vitruvius.Free.2.5.0\LightBuzz.Vitruvius.Free.2.5.0\Assemblies\WPF\LightBuzz.Vitruvius.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Kinect, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Kinect.Face, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\..\..\net45\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>C:\Users\Ayşenur\Desktop\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

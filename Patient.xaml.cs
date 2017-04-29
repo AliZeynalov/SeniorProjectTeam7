@@ -167,9 +167,9 @@ namespace Team7Senior
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-           /* Wpf_doctor.Auth win8 = new Wpf_doctor.Auth();
-            win8.Show();
-            this.Close();*/
+            Team7Senior.Auth auth = new Team7Senior.Auth();
+            auth.Show();
+            this.Close();
         }
     }
 }
