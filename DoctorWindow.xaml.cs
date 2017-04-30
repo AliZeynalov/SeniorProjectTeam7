@@ -16,9 +16,12 @@ using System.Data.OleDb;
 using System.Data;
 using System.Net.Mail;
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace Team7Senior
 {
+
+     
    
     public class MyItem 
     {
@@ -27,39 +30,47 @@ namespace Team7Senior
         public string Name { get; set; }
 
         public string Email { get; set; }
-
        
     }
     
     public partial class DoctorWindow : Window
     {
+
+
        
         public DoctorWindow()
         {
            InitializeComponent();
 
+           refreshList();
+        }
+
+        public void refreshList()
+        {
+            this.listView.Items.Clear();
+
             OleDbConnection con;
             OleDbCommand cmd;
             OleDbDataReader dr;
-            
+
             con = new OleDbConnection("Provider=Microsoft.ACE.Oledb.12.0;Data Source=login.accdb");
             cmd = new OleDbCommand();
             con.Open();
             cmd.Connection = con;
             cmd.CommandText = "SELECT * FROM users ";
             dr = cmd.ExecuteReader();
-            
+
             while (dr.Read())
             {
-               
-                
+
+
                 string a = dr["id"].ToString();
                 int id = Int32.Parse(a);
 
                 String name = dr["pname"].ToString();
                 String mail = dr["mail"].ToString();
                 String username = dr["username"].ToString();
-                
+
 
                 if (username != "admin")
                 {
@@ -67,12 +78,20 @@ namespace Team7Senior
                     this.listView.Items.Add(new MyItem { Id = id, Name = name, Email = mail });
 
                 }
-                this.listView.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Id", System.ComponentModel.ListSortDirection.Ascending));
-                
+                //this.listView.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Id", System.ComponentModel.ListSortDirection.Ascending));
+
             }
-            
+
 
             con.Close();
+        }
+
+        enum ExitCode : int
+        {
+            Success = 0,
+            InvalidLogin = 1,
+            InvalidFilename = 2,
+            UnknownError = 10
         }
 
         public void clear_Text()
@@ -104,6 +123,63 @@ namespace Team7Senior
             tb.GotFocus -= id_GotFocus;
         }
 
+
+        
+        private bool patientDetailsValidation(String username,String name)
+        {
+
+            Regex regexUname = new Regex(@"^[a-zA-Z][a-zA-Z0-9\._\-]{2,22}?[a-zA-Z0-9]{0,2}$");
+            Match unameMatch = regexUname.Match(username);
+            if (!unameMatch.Success)
+            {
+                MessageBox.Show(username + " is not valid username.");
+                return false;
+            }
+
+
+            Regex regexName = new Regex(@"^[a-zA-Z][a-zA-Z\._\-]{2,22}?[a-zA-Z]{0,2}$");
+            Match nameMatch = regexName.Match(name);
+            if (!nameMatch.Success)
+            {
+                MessageBox.Show(name + " is not valid name.");
+                return false;
+            }
+
+            return true;
+        }
+            
+        
+
+
+        private bool mailValidation(String mail)
+        {
+            OleDbConnection con;
+            OleDbCommand cmd;
+            OleDbDataReader dr;
+            con = new OleDbConnection("Provider=Microsoft.ACE.Oledb.12.0;Data Source=login.accdb");
+            cmd = new OleDbCommand();
+            con.Open();
+            cmd.Connection = con;
+            cmd.CommandText = "select * from users where mail='" + mail + "'";
+            dr = cmd.ExecuteReader();
+            
+            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            Match match = regex.Match(mail);
+            if (!match.Success)
+            {
+                MessageBox.Show(mail + " is not valid email type.");
+                return false;
+            }
+            if (dr.Read())
+            {
+                MessageBox.Show("There is already a user with typed email address");
+                return false;
+            }
+            
+            
+            return true;
+        }
+
         private void addbutton_Click(object sender, RoutedEventArgs e) 
         {
             OleDbConnection con;
@@ -114,15 +190,27 @@ namespace Team7Senior
             cmd = new OleDbCommand();
             con.Open();
             cmd.Connection = con;
-            
+
+            bool mailVal = mailValidation(mailtxt.Text);
+            bool patientVal = patientDetailsValidation(unametxt.Text, nametxt.Text);
+            if (mailVal == false)
+            {
+                return;
+            }
+            else if(patientVal == false)
+            {
+                return;
+            }
+
             if (nametxt.Text != "" && mailtxt.Text != "" && unametxt.Text != "" && passwdtxt.Password != "" && cpasswdtxt.Password != "")
             {
-                if(passwdtxt.Password == cpasswdtxt.Password)
+                if(passwdtxt.Password == cpasswdtxt.Password )
                 {
                     cmd.CommandText = "insert into users(username,upassword,pname,mail) Values('" + unametxt.Text + "','" + passwdtxt.Password + "','" + nametxt.Text + "','" + mailtxt.Text + "')";
-                    cmd.ExecuteNonQuery();
+                    String variable = (string)cmd.ExecuteScalar();
                     MessageBox.Show("Patient Added Successfully...");
                     clear_Text();
+                    refreshList();
                 }
                 else
                 {
@@ -134,7 +222,6 @@ namespace Team7Senior
             {
                 MessageBox.Show("Please Be Sure That You Enter All Values!");
             }
-
             con.Close();
         }
 
@@ -246,10 +333,13 @@ namespace Team7Senior
             var selectedItem = (dynamic)listView.SelectedItems[0];
             String selectedcmb = selectedItem.Name;
             cmd.CommandText = "delete from users where pname = '"+selectedcmb+"'";
-            cmd.ExecuteNonQuery();
-            MessageBox.Show("Patient Deleted");
+            String variable = (string)cmd.ExecuteScalar();
+            MessageBox.Show("Patient Deleted Successfully...");
+            clear_Text();
             
             con.Close();
+            refreshList();       
+            
         }
 
         private void definebtn_Click(object sender, RoutedEventArgs e)
@@ -271,12 +361,23 @@ namespace Team7Senior
             neckcb.IsChecked = false;
             hipcb.IsChecked = false;
             stretchcb.IsChecked = false;
+            Console.WriteLine("Burda");
 
 
+            String selectedcmb = "";
 
-            var selectedItem = (dynamic)listView.SelectedItems[0];
-            String selectedcmb = selectedItem.Name;
+            try
+            {
+                var selectedItem = (dynamic)listView.SelectedItems[0];
+                selectedcmb = selectedItem.Name;
 
+            }
+            catch (Exception exp)
+            {
+                Console.WriteLine(exp.Message);
+            }
+            
+          
             OleDbConnection con;
             OleDbCommand cmd;
             OleDbDataReader dr;
@@ -392,6 +493,13 @@ namespace Team7Senior
                 MessageBox.Show("Please Check Your Password");
             }
             
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Team7Senior.PastMotion past = new Team7Senior.PastMotion();
+            past.Show();
+            this.Close();
         }
     }
 

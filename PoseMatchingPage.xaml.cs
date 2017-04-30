@@ -25,7 +25,7 @@ namespace Team7Senior
     /// <summary>
     /// Interaction logic for PoseMatchingPage.xaml
     /// </summary>
-    public partial class PoseMatchingPage : Page
+    public partial class PoseMatchingPage : Window
     {
         private KinectSensor _sensor;
         private MultiSourceFrameReader _reader;
@@ -37,7 +37,7 @@ namespace Team7Senior
         int roundNumber = 5;
         ArrayList savedPose = new ArrayList();
         int counter = 0;
-        private string resources = (@"C:\Users\Asus\Desktop\483\resources\");
+        private string resources = (@"C:\Users\Ayşenur\Desktop\483\resources\");
 
         private Body _currentBody;
         private BodyWrapper bw;
@@ -66,7 +66,7 @@ namespace Team7Senior
 
                 _matching = new PoseMatching
                 {
-                    CheckHead = false,
+                    CheckHead= false,
                     CheckLegLeft = false,
                     CheckLegRight = false,
                     CheckArmLeft = true,
@@ -133,13 +133,13 @@ namespace Team7Senior
             }
         }
 
-        private void Back_Click(object sender, RoutedEventArgs e)
-        {
-            if (NavigationService.CanGoBack)
-            {
-                NavigationService.GoBack();
-            }
-        }
+        //private void Back_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (NavigationService.CanGoBack)
+        //    {
+        //        NavigationService.GoBack();
+        //    }
+        //}
 
         void Reader_MultiSourceFrameArrived(object sender, MultiSourceFrameArrivedEventArgs e)
         {

@@ -16,8 +16,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
 using System.Collections;
-//using MySql.Data;
-//using MySql.Data.MySqlClient;
+using System.Data.OleDb;
+using System.Data;
+
 
 
 namespace Team7Senior { 
@@ -30,10 +31,8 @@ public partial class SaveMotion : Window
         private MultiSourceFrameReader _reader;
         private RecordingMode _mode;
 
-        private string resources = (@"C:\Users\Asus\Desktop\483\resources\");
-        private int counter = 0;
+        private string resources = (@"C:\Users\Ayşenur\Desktop\483\resources\");
 
-       // private MySqlConnection connection;
         private Body _currentBody;
         private BodyWrapper _previousBody;
 
@@ -42,7 +41,6 @@ public partial class SaveMotion : Window
         public SaveMotion()
         {
             InitializeComponent();
-           // connectDB();
 
             _mode = RecordingMode.Stopped;
 
@@ -55,52 +53,6 @@ public partial class SaveMotion : Window
                 _reader = _sensor.OpenMultiSourceFrameReader(FrameSourceTypes.Color | FrameSourceTypes.Depth | FrameSourceTypes.Infrared | FrameSourceTypes.Body);
                 _reader.MultiSourceFrameArrived += Reader_MultiSourceFrameArrived;
             }
-
-        }
-
-       /* public void connectDB()
-        {
-            try
-            {
-                string connectionString = "user=root;database=physiotherapist;server=localhost;password=aysenur191;";
-                connection = new MySqlConnection(connectionString);
-                connection.Open();
-
-            }
-            catch (MySqlException ex)
-            {
-                Console.WriteLine("DB Connection Error");
-            }
-
-        }*/
-
-        public void writeToFile(ArrayList poses)
-        {
-            Console.WriteLine("SAVING FILE");
-            int numberOfFrames = poses.Count;
-            string description = "TEST 2";
-            string name = "";
-            string category_id = "1";
-            string path = resources; // +"\\" + name + "\\";
-
-            bool exists = System.IO.Directory.Exists(path);
-            if (!exists)
-                System.IO.Directory.CreateDirectory(path);
-
-            for (int i = 0; i < poses.Count; i++)
-            {
-                System.IO.File.WriteAllText(path + i + ".json", poses[i].ToString());
-                //  counter++;
-            }
-
-           /* string cmdText = "insert into motion(path, motion_name, frame_no, description, category_id) values(@path, @motion_name, @frame_no, @description, @category_id)";
-            MySqlCommand cmd = new MySqlCommand(cmdText, connection);
-            cmd.Parameters.Add("@path", resources);
-            cmd.Parameters.Add("@motion_name", name);
-            cmd.Parameters.Add("@frame_no", numberOfFrames);
-            cmd.Parameters.Add("@description", description);
-            cmd.Parameters.Add("@category_id", category_id);
-            cmd.ExecuteNonQuery();*/
 
         }
 
@@ -140,18 +92,9 @@ public partial class SaveMotion : Window
                             BodyWrapper pose = new BodyWrapper();
                             pose.Set(_currentBody, viewer.CoordinateMapper, Visualization.Color);
                             string pose_json = JsonConvert.SerializeObject(pose);
-                            //writeToFile(pose_json);
                             savedPose.Add(pose_json);
                         }
-                        else if (_mode == RecordingMode.Saving)
-                        {
-                            if (savedPose.Count > 0)
-                            {
-
-                                // writeToFile(savedPose);
-                            }
-                            _mode = RecordingMode.Stopped;
-                        }
+                        
                     }
                     else
                     {
@@ -172,10 +115,6 @@ public partial class SaveMotion : Window
             {
                 _sensor.Close();
             }
-           /* if (connection != null)
-            {
-                connection.Close();
-            }*/
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
@@ -196,7 +135,6 @@ public partial class SaveMotion : Window
             if (_mode == RecordingMode.Stopped && _currentBody != null)
             {
                 _mode = RecordingMode.Started;
-                counter = 0;
             }
         }
 
@@ -204,9 +142,10 @@ public partial class SaveMotion : Window
         {
             if (_mode == RecordingMode.Started && _currentBody != null)
             {
-
-                _mode = RecordingMode.Saving;
-                writeToFile(savedPose);
+                _mode = RecordingMode.Stopped;
+                Team7Senior.DefineMotion dm = new Team7Senior.DefineMotion(savedPose);
+                dm.Show();
+                this.Close();
             }
         }
     }

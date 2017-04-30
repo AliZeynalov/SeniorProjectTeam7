@@ -7,8 +7,10 @@
       xmlns:controls="clr-namespace:LightBuzz.Vitruvius.Controls;assembly=LightBuzz.Vitruvius"
       mc:Ignorable="d"
       Title="Saving Motion"
-      Unloaded="Page_Unloaded" Height="990.244" Width="1121.951">
-
+      Unloaded="Page_Unloaded" Height="990.244" Width="1121.951" ResizeMode="NoResize">
+    <Window.Background>
+        <ImageBrush ImageSource="img/back.jpg"/>
+    </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>

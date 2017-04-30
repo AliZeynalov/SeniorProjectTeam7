@@ -1,4 +1,6 @@
 ﻿using System;
+using LightBuzz.Vitruvius;
+using Microsoft.Kinect;
 using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Linq;
@@ -21,6 +23,8 @@ namespace Team7Senior
     /// </summary>
     public partial class Patient : Window
     {
+
+       
         public Patient(String _mainusername)
         {
             InitializeComponent();
@@ -38,8 +42,6 @@ namespace Team7Senior
 
             while (dr.Read())
             {
-
-
                 String name = dr["pname"].ToString();
                 String mail = dr["mail"].ToString();
                 string a = dr["id"].ToString();
@@ -47,9 +49,11 @@ namespace Team7Senior
                 nametb.Text = name;
                 idtb.Text = id.ToString();
                 mailtb.Text = mail;
-
-
             }
+
+            ListViewItem item = new ListViewItem();
+            item.Content = "Ahmet";
+            listView.Items.Add(item);
         }
 
         private void enablebtn_Click(object sender, RoutedEventArgs e)
@@ -165,11 +169,24 @@ namespace Team7Senior
             }
         }
 
+
+
         private void button_Click(object sender, RoutedEventArgs e)
         {
             Team7Senior.Auth auth = new Team7Senior.Auth();
             auth.Show();
             this.Close();
         }
+
+      
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            Team7Senior.PoseMatchingPage pm = new Team7Senior.PoseMatchingPage();
+            pm.Show();
+            this.Close();
+        }
+
+       
     }
 }

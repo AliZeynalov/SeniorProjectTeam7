@@ -62,5 +62,10 @@ namespace Team7Senior
 
             con.Close();
         }
+
+        private void Window_SizeChanged_1(object sender, SizeChangedEventArgs e)
+        {
+
+        }
     }
 }

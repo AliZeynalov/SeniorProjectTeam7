@@ -1,4 +1,4 @@
-﻿<Page x:Class="Team7Senior.PoseMatchingPage"
+﻿<Window x:Class="Team7Senior.PoseMatchingPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -8,7 +8,11 @@
       mc:Ignorable="d"
       d:DesignHeight="300" d:DesignWidth="900"
       Title="PoseMatchingPage"
-      Unloaded="Page_Unloaded">
+      Unloaded="Page_Unloaded" WindowState="Minimized" ResizeMode="NoResize">
+
+    <Window.Background>
+        <ImageBrush ImageSource="img/back.jpg"/>
+    </Window.Background>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -22,13 +26,7 @@
                 <ColumnDefinition Width="60"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" Click="Back_Click"
-                    Style="{StaticResource NavigationBackButtonNormalStyle}"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    AutomationProperties.Name="Back"
-                    AutomationProperties.AutomationId="BackButton"
-                    AutomationProperties.ItemType="Navigation Button"/>
+            
             <TextBlock x:Name="pageTitle" Text="Pose Matching" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1"
                         IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Center" />
         </Grid>
@@ -43,5 +41,7 @@
 
         </Grid>
         <Button Content="Button" HorizontalAlignment="Left" Height="37" Margin="812,193,0,0" Grid.Row="1" VerticalAlignment="Top" Width="66" Click="Button_Click_1"/>
+        <Button Style="{StaticResource ButtonCommonStyle}" Content="Start Pose" Margin="16,0,0,8.4" Padding="30,8" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" RenderTransformOrigin="0.5,0.5" Height="28" Width="106"/>
+        <Button Style="{StaticResource ButtonCommonStyle}" Content="Stop Pose" Margin="607,0,0,4.4" Padding="30,8" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" />
     </Grid>
-</Page>
+</Window>

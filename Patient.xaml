@@ -4,10 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Team7Senior"
+        xmlns:controls="clr-namespace:LightBuzz.Vitruvius.Controls;assembly=LightBuzz.Vitruvius"
         mc:Ignorable="d"
-        Title="Patient" Height="860" Width="1300"
-        SizeToContent="WidthAndHeight"
-        ResizeMode="NoResize">
+        Title="Patient" Height="650" Width="650"
+        SizeToContent="WidthAndHeight" WindowStartupLocation="Manual" ResizeMode="NoResize">
     <Window.Background>
         <ImageBrush ImageSource="img/back.jpg"/>
     </Window.Background>
@@ -85,9 +85,27 @@
             <Button x:Name="updatebtn" Content="Update E-Mail" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Click="updatebtn_Click" Canvas.Left="143" Canvas.Top="87"/>
             <Label x:Name="label6" Content="Send E-Mail to Your Physiotherapist" Canvas.Left="3" Canvas.Top="142"  FontFamily="Arial Black" FontSize="14" Foreground="#FF126C8C"/>
         </Canvas>
-        <Button x:Name="button" Content="Logout" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="button_Click" Margin="1175,26,0,0"/>
-        <Image x:Name="image" Source="img/logo.png"  HorizontalAlignment="Left" Height="121" VerticalAlignment="Top" Width="290" Margin="10,577,0,0"/>
+        <Button x:Name="button" Content="Logout" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="button_Click" Margin="558,577,0,0" Height="33"/>
+        <Image x:Name="image" Source="img/logo.png"  HorizontalAlignment="Left" Height="121" VerticalAlignment="Top" Width="290" Margin="343,46,0,0"/>
+        <ListView x:Name="listView" HorizontalAlignment="Left" Height="150" VerticalAlignment="Top" Width="180" Margin="382,240,0,0" Background="Transparent"  >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Select Exercise"/>
+                    <GridViewColumn Header="Repetition"/>
+                </GridView>
+            </ListView.View>
+            <ListViewItem Content="Neck" Margin="0" Foreground="Black"/>
+            <ListViewItem Content="Leg" Margin="0" Foreground="Black"/>
+          
+        </ListView>
+
         
+        <Button Content="Start Motion" HorizontalAlignment="Left" Height="55" Margin="416,441,0,0" VerticalAlignment="Top" Width="91" Click="Button_Click_2"/>
+        <Border BorderBrush="#FF126C8C" BorderThickness="3" HorizontalAlignment="Left" Height="150" Margin="382,240,0,0" VerticalAlignment="Top" Width="180"/>
+
+
+
+
 
     </Grid>
 </Window>

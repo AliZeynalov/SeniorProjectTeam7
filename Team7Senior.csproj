@@ -76,14 +76,14 @@
       <DependentUpon>DoctorWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Outlook\Application.cs" />
+    <Compile Include="PastMotion.xaml.cs">
+      <DependentUpon>PastMotion.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Patient.xaml.cs">
       <DependentUpon>Patient.xaml</DependentUpon>
     </Compile>
     <Compile Include="PoseMatchingPage.xaml.cs">
       <DependentUpon>PoseMatchingPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="RecordingPage.xaml.cs">
-      <DependentUpon>RecordingPage.xaml</DependentUpon>
     </Compile>
     <Page Include="Auth.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -96,6 +96,10 @@
     <Page Include="DoctorWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PastMotion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SaveMotion.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -128,10 +132,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="PoseMatchingPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="RecordingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

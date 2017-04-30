@@ -71,7 +71,6 @@ D:\senior\bin\Debug\Newtonsoft.Json.pdb
 D:\senior\bin\Debug\Newtonsoft.Json.xml
 D:\senior\obj\Debug\SaveMotion.g.cs
 D:\senior\obj\Debug\PoseMatchingPage.g.cs
-D:\senior\obj\Debug\RecordingPage.g.cs
 D:\senior\obj\Debug\App.baml
 D:\senior\obj\Debug\Auth.baml
 D:\senior\obj\Debug\DefineMotion.baml
@@ -80,9 +79,10 @@ D:\senior\obj\Debug\SaveMotion.baml
 D:\senior\obj\Debug\MainWindow.baml
 D:\senior\obj\Debug\Patient.baml
 D:\senior\obj\Debug\PoseMatchingPage.baml
-D:\senior\obj\Debug\RecordingPage.baml
 D:\senior\obj\Debug\Team7Senior.g.resources
 D:\senior\obj\Debug\Team7Senior.Properties.Resources.resources
 D:\senior\obj\Debug\Team7Senior.csproj.GenerateResource.Cache
 D:\senior\obj\Debug\Team7Senior.exe
 D:\senior\obj\Debug\Team7Senior.pdb
+D:\senior\obj\Debug\PastMotion.baml
+D:\senior\obj\Debug\PastMotion.g.cs

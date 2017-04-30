@@ -77,9 +77,10 @@
             <Label x:Name="label13" Content="Message:" Foreground="#FF126C8C" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="64" Canvas.Top="208"/>
             <Border BorderBrush="#FF126C8C" BorderThickness="3" Height="402" Width="675"/>
         </Canvas>
-        <Button x:Name="outbtn" Content="Logout" HorizontalAlignment="Left" Margin="937,525,0,0" VerticalAlignment="Top" Width="111" Click="outbtn_Click"/>
+        <Button x:Name="outbtn" Content="Logout" HorizontalAlignment="Left" Margin="1023,523,0,0" VerticalAlignment="Top" Width="111" Click="outbtn_Click" Height="24"/>
         <Image x:Name="image" Source="img/logo.png" HorizontalAlignment="Left" Height="131" Margin="672,587,0,0" VerticalAlignment="Top" Width="409"/>
         <Button x:Name="definebtn" Content="Define Motion" HorizontalAlignment="Left" Margin="685,525,0,0" VerticalAlignment="Top" Width="119" Click="definebtn_Click"/>
+        <Button Content="Choose Past Motion" HorizontalAlignment="Left" Height="25" Margin="831,522,0,0" VerticalAlignment="Top" Width="144" Click="Button_Click_1"/>
 
 
 

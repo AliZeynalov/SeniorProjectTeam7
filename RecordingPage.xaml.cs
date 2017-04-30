@@ -15,7 +15,7 @@ namespace LightBuzz.Vituvius.Samples.WPF
     /// </summary>
     public partial class RecordingPage : Page
     {
-        readonly string FOLDER_PATH = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "video");
+        readonly string FOLDER_PATH = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "C:/Users/Ayşenur/Desktop/483/bebegim");
 
         KinectSensor _sensor = null;
         MultiSourceFrameReader _reader = null;
