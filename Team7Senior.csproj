@@ -167,6 +167,13 @@
     <Resource Include="VitruviusIcon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="img\password_icon.png" />
+    <Resource Include="img\username_icon.png" />
+    <Resource Include="img\category_icon.png" />
+    <Resource Include="img\desc_icon.png" />
+    <Resource Include="img\repetition_icon.jpg" />
+    <Resource Include="img\motion_icon.png" />
+    <Resource Include="img\patient_icon.png" />
     <Resource Include="Outlook\img\logo.png" />
     <Resource Include="Outlook\img\back.jpg" />
     <Resource Include="img\logo.png" />

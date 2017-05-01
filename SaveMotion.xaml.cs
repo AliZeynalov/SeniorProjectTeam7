@@ -143,10 +143,18 @@ public partial class SaveMotion : Window
             if (_mode == RecordingMode.Started && _currentBody != null)
             {
                 _mode = RecordingMode.Stopped;
-                Team7Senior.DefineMotion dm = new Team7Senior.DefineMotion(savedPose);
-                dm.Show();
-                this.Close();
+              
             }
+            Team7Senior.DefineMotion dm = new Team7Senior.DefineMotion(savedPose);
+            dm.Show();
+            this.Close();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Team7Senior.DoctorWindow dw = new Team7Senior.DoctorWindow();
+            dw.Show();
+            this.Close();
         }
     }
 

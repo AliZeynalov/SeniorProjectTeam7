@@ -26,6 +26,11 @@ namespace Team7Senior
         private ArrayList savedPose;
         private string resources = (@"C:\Users\Ayşenur\Desktop\483\resources");
 
+        OleDbConnection con;
+        OleDbCommand cmd;
+        OleDbDataReader dr;
+        
+
         public DefineMotion(ArrayList savedPose)
         {
             InitializeComponent();
@@ -36,25 +41,41 @@ namespace Team7Senior
             refreshList();
         }
 
+        //public void connectDB()
+        //{
+        //    con = new OleDbConnection("Provider=Microsoft.ACE.Oledb.12.0;Data Source=login.accdb");
+        //    cmd = new OleDbCommand();
+        //    try
+        //    {
+        //        con.Open();
+        //        // Insert code to process data.
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("Failed to connect to data source");
+        //    }
+        //    finally
+        //    {
+        //        con.Close();
+        //    }
+           
+        //}
+
         public void refreshList()
         {
             this.patientList.Items.Clear();
 
-            OleDbConnection con;
-            OleDbCommand cmd;
-            OleDbDataReader dr;
-
+           
             con = new OleDbConnection("Provider=Microsoft.ACE.Oledb.12.0;Data Source=login.accdb");
             cmd = new OleDbCommand();
             con.Open();
+            
             cmd.Connection = con;
             cmd.CommandText = "SELECT * FROM users ";
             dr = cmd.ExecuteReader();
 
             while (dr.Read())
             {
-
-
                 string a = dr["id"].ToString();
                 int id = Int32.Parse(a);
 
@@ -72,13 +93,12 @@ namespace Team7Senior
                 this.patientList.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Id", System.ComponentModel.ListSortDirection.Ascending));
 
             }
-
-
             con.Close();
         }
 
         public int getCategoryId(string name)
         {
+
             OleDbConnection con;
             OleDbCommand cmd;
             OleDbDataReader dr;
@@ -86,6 +106,7 @@ namespace Team7Senior
             con = new OleDbConnection("Provider=Microsoft.ACE.Oledb.12.0;Data Source=login.accdb");
             cmd = new OleDbCommand();
             con.Open();
+           
             cmd.Connection = con;
             cmd.CommandText = "SELECT * FROM category where cat_name ='" + name + "'";
             dr = cmd.ExecuteReader();
@@ -100,6 +121,7 @@ namespace Team7Senior
             {
                 return -1;
             }
+          
         }
 
         public void writeToFile(string name, string cat_name, string description)
@@ -108,6 +130,7 @@ namespace Team7Senior
             int numberOfFrames = savedPose.Count;
             int category_id = getCategoryId(cat_name);
             string path = resources + "\\" + name + "\\";
+            int repet =Int32.Parse(repetition.Text);
 
             bool exists = System.IO.Directory.Exists(path);
             if (!exists)
@@ -122,18 +145,21 @@ namespace Team7Senior
             String selectedcmb = selectedItem.Name;
             int chosenId = selectedItem.Id;
 
+
             OleDbConnection con;
             OleDbCommand cmd;
             con = new OleDbConnection("Provider=Microsoft.ACE.Oledb.12.0;Data Source=login.accdb");
             cmd = new OleDbCommand();
             con.Open();
+           
             cmd.Connection = con;
 
-            cmd.CommandText = "insert into motion(motion_name,path,frame_no,description,category_id) Values('" + name + "','" + path + "'," + numberOfFrames + ",'" + description + "'," + category_id + ")";
+            cmd.CommandText = "insert into motion(motion_name,path,frame_no,description,category_id, repetition) Values('" + name + "','" + path + "'," + numberOfFrames + ",'" + description + "'," + category_id + ", " + repet + ")";
             cmd.ExecuteNonQuery();
 
             cmd.CommandText = "SELECT TOP 1 id FROM motion ORDER BY id DESC";
-            OleDbDataReader dr;
+            //OleDbDataReader dr;
+
             cmd.CommandText = "Select @@Identity";
             int mot_id = (int)cmd.ExecuteScalar();
 
@@ -149,7 +175,8 @@ namespace Team7Senior
             con.Close();
         }
 
-        public void fillCategories() {
+        public void fillCategories()
+        {
             this.category_combo.Items.Clear();
 
             OleDbConnection con;
@@ -159,6 +186,7 @@ namespace Team7Senior
             con = new OleDbConnection("Provider=Microsoft.ACE.Oledb.12.0;Data Source=login.accdb");
             cmd = new OleDbCommand();
             con.Open();
+          
             cmd.Connection = con;
             cmd.CommandText = "SELECT * FROM category ";
             dr = cmd.ExecuteReader();
@@ -179,9 +207,9 @@ namespace Team7Senior
 
         private void backbtn_Click(object sender, RoutedEventArgs e)
         {
-            /*Wpf_doctor.DoctorWindow win5 = new Wpf_doctor.DoctorWindow();
-            win5.Show();
-            this.Close();*/
+            Team7Senior.DoctorWindow dw = new Team7Senior.DoctorWindow();
+            dw.Show();
+            this.Close();
         }
 
         private void savebtn_Click(object sender, RoutedEventArgs e)
@@ -190,6 +218,7 @@ namespace Team7Senior
             string cat_name = (string)selected_item.Content;
             string mot_name = motion_name.Text;
             string desc = description.Text;
+           
 
             writeToFile(mot_name, cat_name, desc);
         }

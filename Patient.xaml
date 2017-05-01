@@ -6,14 +6,13 @@
         xmlns:local="clr-namespace:Team7Senior"
         xmlns:controls="clr-namespace:LightBuzz.Vitruvius.Controls;assembly=LightBuzz.Vitruvius"
         mc:Ignorable="d"
-        Title="Patient" Height="650" Width="650"
-        SizeToContent="WidthAndHeight" WindowStartupLocation="Manual" ResizeMode="NoResize">
+        Title="Patient" Height="670" Width="670" WindowStartupLocation="Manual" ResizeMode="CanMinimize">
     <Window.Background>
         <ImageBrush ImageSource="img/back.jpg"/>
     </Window.Background>
     <Grid>
-        <Canvas HorizontalAlignment="Left" Height="490" Margin="10,26,0,0" VerticalAlignment="Top" Width="296">
-            <Border BorderBrush="#FF126C8C" BorderThickness="3" HorizontalAlignment="Left" Height="490" VerticalAlignment="Top" Width="296"/>
+        <Canvas HorizontalAlignment="Left" Height="490" Margin="15,77,0,0" VerticalAlignment="Top" Width="296">
+            <Border BorderBrush="#FF126C8C" BorderThickness="3" HorizontalAlignment="Left" Height="490" VerticalAlignment="Top" Width="296" Canvas.Left="-1"/>
             <Label x:Name="label" Content="ID: " HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="12"/>
             <TextBox x:Name="idtb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="37" IsEnabled="False" Canvas.Left="53" Canvas.Top="15"/>
             <Label x:Name="label1" Content="Name: " HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="126" Canvas.Top="12"/>
@@ -85,23 +84,22 @@
             <Button x:Name="updatebtn" Content="Update E-Mail" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Click="updatebtn_Click" Canvas.Left="143" Canvas.Top="87"/>
             <Label x:Name="label6" Content="Send E-Mail to Your Physiotherapist" Canvas.Left="3" Canvas.Top="142"  FontFamily="Arial Black" FontSize="14" Foreground="#FF126C8C"/>
         </Canvas>
-        <Button x:Name="button" Content="Logout" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="button_Click" Margin="558,577,0,0" Height="33"/>
-        <Image x:Name="image" Source="img/logo.png"  HorizontalAlignment="Left" Height="121" VerticalAlignment="Top" Width="290" Margin="343,46,0,0"/>
-        <ListView x:Name="listView" HorizontalAlignment="Left" Height="150" VerticalAlignment="Top" Width="180" Margin="382,240,0,0" Background="Transparent"  >
+        <Button x:Name="button" Content="Logout" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="button_Click" Margin="563,5,0,0" Height="33"/>
+        <Image x:Name="image" Source="img/logo.png"  HorizontalAlignment="Left" Height="121" VerticalAlignment="Top" Width="290" Margin="330,77,0,0"/>
+        <ListView x:Name="motionList" HorizontalAlignment="Left" Height="180" VerticalAlignment="Top" Width="273" Margin="343,244,0,0" Background="Transparent"  >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Select Exercise"/>
-                    <GridViewColumn Header="Repetition"/>
+                    <GridViewColumn Header="MotionName" DisplayMemberBinding="{Binding MotionName}"/>
+                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}"/>
+                    <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}"/>
+                    <GridViewColumn Header="Repetition" DisplayMemberBinding="{Binding Repetition}"/>
                 </GridView>
             </ListView.View>
-            <ListViewItem Content="Neck" Margin="0" Foreground="Black"/>
-            <ListViewItem Content="Leg" Margin="0" Foreground="Black"/>
-          
         </ListView>
 
         
-        <Button Content="Start Motion" HorizontalAlignment="Left" Height="55" Margin="416,441,0,0" VerticalAlignment="Top" Width="91" Click="Button_Click_2"/>
-        <Border BorderBrush="#FF126C8C" BorderThickness="3" HorizontalAlignment="Left" Height="150" Margin="382,240,0,0" VerticalAlignment="Top" Width="180"/>
+        <Button Content="Start Motion" HorizontalAlignment="Left" Height="55" Margin="432,465,0,0" VerticalAlignment="Top" Width="91" Click="Button_Click_2"/>
+        <Border BorderBrush="#FF126C8C" BorderThickness="3" HorizontalAlignment="Left" Height="191" Margin="343,235,0,0" VerticalAlignment="Top" Width="276"/>
 
 
 

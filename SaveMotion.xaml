@@ -7,7 +7,7 @@
       xmlns:controls="clr-namespace:LightBuzz.Vitruvius.Controls;assembly=LightBuzz.Vitruvius"
       mc:Ignorable="d"
       Title="Saving Motion"
-      Unloaded="Page_Unloaded" Height="990.244" Width="1121.951" ResizeMode="NoResize">
+      Unloaded="Page_Unloaded" Height="830" Width="1121.951" ResizeMode="CanMinimize">
     <Window.Background>
         <ImageBrush ImageSource="img/back.jpg"/>
     </Window.Background>
@@ -17,20 +17,27 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Back button and page title -->
-        <Grid Grid.Column="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-        </Grid>
+       
 
         <Grid Grid.Row="1">
             <controls:KinectViewer x:Name="viewer" Grid.Column="0" />
-
-            <Button Style="{StaticResource ButtonCommonStyle}" Content="Start Pose" Margin="20" Padding="30,8" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="Start_Click" />
-            <Button Style="{StaticResource ButtonCommonStyle}" Content="Stop Pose" Margin="20" Padding="30,8" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Stop_Click" />
+            <Button Style="{StaticResource ButtonCommonStyle}" Content="Start Record" Margin="7,0,0,5.8" Padding="30,8" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="Start_Click" />
+            <Button Style="{StaticResource ButtonCommonStyle}" Content="Stop Record" Margin="0,0,3.2,4.4" Padding="30,8" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Stop_Click" />
         </Grid>
+        <Button Content="Back" 
+                HorizontalAlignment="Left" 
+                Height="35" Margin="12,14,0,0" 
+                VerticalAlignment="Top" Width="93" 
+                Click="Button_Click_1"
+                FontWeight="Bold"/>
+
+        <Image x:Name="image" 
+               Source="img/logo.png" 
+               HorizontalAlignment="Center" 
+               Height="111" 
+               VerticalAlignment="Top" 
+               Width="227" 
+               Margin="445,8,443.2,0" 
+               Grid.RowSpan="2"/>
     </Grid>
 </Window>

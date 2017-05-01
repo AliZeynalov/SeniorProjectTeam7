@@ -128,12 +128,20 @@ namespace Team7Senior
             Console.WriteLine(patient.Id);
             Console.WriteLine(motion.Id);
 
+            
             cmd.CommandText = "insert into user_motion(user_id,motion_id) Values(" + patient.Id + "," + motion.Id + ")";
             cmd.ExecuteNonQuery();
 
             MessageBox.Show("Motion Added Successfully...");
 
             con.Close();
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            Team7Senior.DoctorWindow dw = new Team7Senior.DoctorWindow();
+            dw.Show();
+            this.Close();
         }
     }
 }

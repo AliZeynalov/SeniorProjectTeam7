@@ -17,8 +17,8 @@ using System.Windows.Shapes;
 using Newtonsoft.Json;
 using System.IO;
 using System.Collections;
-//using MySql.Data;
-//using MySql.Data.MySqlClient;
+using System.Data.OleDb;
+using System.Data;
 
 namespace Team7Senior
 {
@@ -31,29 +31,38 @@ namespace Team7Senior
         private MultiSourceFrameReader _reader;
         private PoseMatching _matching;
 
-      //  private MySqlConnection connection;
-
-        int frameNumber = 0;
-        int roundNumber = 5;
         ArrayList savedPose = new ArrayList();
         int counter = 0;
-        private string resources = (@"C:\Users\Ayşenur\Desktop\483\resources\");
 
         private Body _currentBody;
         private BodyWrapper bw;
 
-        int pose_choice;
+        private BodyWrapper first_pose, last_pose, current_pose;
+        int repetition = 0;
+
+        int frame_rate = 10;
+        int current_rate_counter = 0;
+
         bool flag = true;
         double radius = 15;
         Brush example_brush = Brushes.Blue;
 
-        public PoseMatchingPage()
+        Patient.MotionItem motion;
+        Patient.UserInfo userInfo;
+
+        public PoseMatchingPage(Patient.MotionItem mi, Patient.UserInfo ui)
         {
             InitializeComponent();
-           // connectDB();
 
-            pose_choice = 3;
+            motion = mi;
+            userInfo = ui;
+
             readFromFile();
+            first_pose = (BodyWrapper)savedPose[0];
+            last_pose = (BodyWrapper)savedPose[savedPose.Count - 1];
+            current_pose = first_pose;
+
+
             Console.WriteLine("# of poses found : " + savedPose.Count);
             _sensor = KinectSensor.GetDefault();
 
@@ -77,31 +86,29 @@ namespace Team7Senior
 
         }
 
-      /*  public void connectDB()
-        {
-            try
+        private void change() {
+            
+            if (current_pose == first_pose)
             {
-                string connectionString = "user=root;database=physiotherapist;server=localhost;password=aysenur191;";
-                connection = new MySqlConnection(connectionString);
-                connection.Open();
-
+                current_pose = last_pose;
             }
-            catch (MySqlException ex)
+            else
             {
-                Console.WriteLine("DB Connection Error");
+                repetition++;
+                current_pose = first_pose;
             }
 
-        }*/
+            if (repetition == motion.Repetition) {
+                MessageBox.Show("Congratulations!");
+                dispose_window();
+                // Mail burda attirilacak yapilan hareketin ismi motion.MotionName vs vs
+            }
+
+        }
 
         private void readFromFile()
         {
-            //MySqlCommand cmd = new MySqlCommand("SELECT BusinessEntityID AS ID, FirstName, MiddleName, LastName FROM Person.Person WHERE id = '" + pose_choice + "'", connection);
-            //MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-
-            // Pose Matching klasorune gidilecek.
-
-            string[] fileEntries = Directory.GetFiles(resources);
-            // Console.WriteLine("Total size : " + fileEntries.Length);
+            string[] fileEntries = Directory.GetFiles(motion.Path);
             foreach (string fileName in fileEntries)
                 processFile(fileName);
 
@@ -173,40 +180,35 @@ namespace Team7Senior
 
 
                     // counter++;
-                    if (counter >= savedPose.Count)
-                    {
-                        counter = 0;
-                        Console.WriteLine("bir devre bitti");
-                    }
+                    //if (counter >= savedPose.Count)
+                    //{
+                    //    counter = 0;
+                    //    Console.WriteLine("bir devre bitti");
+                    //}
 
-                    refreshBody();
+                    //refreshBody();
 
                     if (_currentBody != null)
                     {
-
                         viewer1.Clear();
                         viewer2.Clear();
-                        //var match = _matching.Matches(bw, _currentBody);
-                        //var verify_brush = match ? Brushes.Green : Brushes.Red;
 
-                        // if (match)
-                        //{
-                        //Console.WriteLine("counter: " + counter);
+                        var match = _matching.Matches(current_pose, _currentBody);
+                        var verify_brush = match ? Brushes.Green : Brushes.Red;
 
-
-                        //}
+                        if (match) {
+                            change();
+                        }
 
                         viewer1.DrawBody(_currentBody, radius, example_brush, radius, example_brush);
-                        viewer2.DrawBody(bw, radius, example_brush, radius, example_brush);
-
+                        viewer2.DrawBody(current_pose, radius, verify_brush, radius, verify_brush);
                     }
                     else
                     {
                         viewer1.Clear();
                         viewer2.Clear();
 
-                        viewer2.DrawBody(bw, radius, example_brush, radius, example_brush);
-
+                        viewer2.DrawBody(current_pose, radius, Brushes.Red, radius, Brushes.Red);
                     }
                 }
                 else
@@ -216,11 +218,18 @@ namespace Team7Senior
             }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+       
+        private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            counter++;
-            Console.WriteLine("counter: " + counter + " " + bw.Joints[JointType.HandRight].Position.X + " " + bw.Joints[JointType.HandRight].Position.Y);
-
+            dispose_window();
         }
+
+        private void dispose_window() {
+            Team7Senior.Patient patient = new Team7Senior.Patient(userInfo.Username);
+            patient.Show();
+            this.Close();
+        }
+
+       
     }
 }

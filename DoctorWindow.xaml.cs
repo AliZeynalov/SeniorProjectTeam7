@@ -227,10 +227,10 @@ namespace Team7Senior
 
         private void outbtn_Click(object sender, RoutedEventArgs e)
         {
-            
-           /* Wpf_doctor.Auth win3 = new Wpf_doctor.Auth();
-            win3.Show();
-            this.Close();*/
+
+            Team7Senior.Auth auth = new Team7Senior.Auth();
+            auth.Show();
+            this.Close();
         }
 
 
@@ -240,54 +240,7 @@ namespace Team7Senior
             OleDbConnection con;
             OleDbCommand cmd;
 
-            if(shouldercb.IsChecked == true)
-            {
-                x1 = true;
-            }
-            else
-            {
-                x1 = false;
-            }
-            if (kneecb.IsChecked == true)
-            {
-                x2 = true;
-            }
-            else
-            {
-                x2 = false;
-            }
-            if (neckcb.IsChecked == true)
-            {
-                x3 = true;
-            }
-            else
-            {
-                x3 = false;
-            }
-            if (armcb.IsChecked == true)
-            {
-                x4 = true;
-            }
-            else
-            {
-                x4 = false;
-            }
-            if (stretchcb.IsChecked == true)
-            {
-                x5 = true;
-            }
-            else
-            {
-                x5 = false;
-            }
-            if (hipcb.IsChecked == true)
-            {
-                x6 = true;
-            }
-            else
-            {
-                x6 = false;
-            }
+            
 
 
             con = new OleDbConnection("Provider=Microsoft.ACE.Oledb.12.0;Data Source=login.accdb");
@@ -301,12 +254,6 @@ namespace Team7Senior
             String selectedcmb = selectedItem.Name;
 
             cmd.CommandText = "update users set [shoulder] = ?, [knee] = ?, [neck] = ?, [arm] = ?, [stretch] = ?, [hip] = ? where pname=? ";
-            cmd.Parameters.AddWithValue("?", x1);
-            cmd.Parameters.AddWithValue("?", x2);
-            cmd.Parameters.AddWithValue("?", x3);
-            cmd.Parameters.AddWithValue("?", x4);
-            cmd.Parameters.AddWithValue("?", x5);
-            cmd.Parameters.AddWithValue("?", x6);
             cmd.Parameters.AddWithValue("?", selectedcmb);
             cmd.ExecuteNonQuery();
 
@@ -355,12 +302,7 @@ namespace Team7Senior
 
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            shouldercb.IsChecked = false;
-            armcb.IsChecked = false;
-            kneecb.IsChecked = false;
-            neckcb.IsChecked = false;
-            hipcb.IsChecked = false;
-            stretchcb.IsChecked = false;
+           
             Console.WriteLine("Burda");
 
 
@@ -397,31 +339,7 @@ namespace Team7Senior
                 String mail = dr["mail"].ToString();
                 nametb.Text = name;
                 mailtb.Text = mail;
-                
-                if (dr["shoulder"].ToString() == "True")
-                {
-                    shouldercb.IsChecked = true;
-                }
-                if (dr["neck"].ToString() == "True")
-                {
-                    neckcb.IsChecked = true;
-                }
-                if (dr["arm"].ToString() == "True")
-                {
-                    armcb.IsChecked = true;
-                }
-                if (dr["knee"].ToString() == "True")
-                {
-                    kneecb.IsChecked = true;
-                }
-                if (dr["hip"].ToString() == "True")
-                {
-                    hipcb.IsChecked = true;
-                }
-                if (dr["stretch"].ToString() == "True")
-                {
-                    stretchcb.IsChecked = true;
-                }
+               
             }
 
 
@@ -501,6 +419,8 @@ namespace Team7Senior
             past.Show();
             this.Close();
         }
+
+       
     }
 
         

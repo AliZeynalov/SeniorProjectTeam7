@@ -16,7 +16,7 @@ namespace Team7Senior
 
         private void PoseMatching_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new PoseMatchingPage());
+            //NavigationService.Navigate(new PoseMatchingPage());
         }
 
         private void Features_Click(object sender, RoutedEventArgs e)

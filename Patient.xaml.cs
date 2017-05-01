@@ -23,10 +23,28 @@ namespace Team7Senior
     /// </summary>
     public partial class Patient : Window
     {
+        public class UserInfo {
+            public int Id { get; set; }
+            public string Username { get; set; }
+            public string Name { get; set; }
+            public string Email { get; set; } 
+        }
 
+        public class MotionItem {
+            public int Id { get; set; }
+            public string Category { get; set; }
+            public string MotionName { get; set; }
+            public string Description { get; set; }
+            public string Path { get; set; }
+            public int FrameNo { get; set; }
+            public int Repetition { get; set; }
+        }
+
+        private UserInfo userInfo;
        
         public Patient(String _mainusername)
         {
+            userInfo = new UserInfo();
             InitializeComponent();
             String username = _mainusername;
             OleDbConnection con;
@@ -42,18 +60,51 @@ namespace Team7Senior
 
             while (dr.Read())
             {
-                String name = dr["pname"].ToString();
-                String mail = dr["mail"].ToString();
-                string a = dr["id"].ToString();
-                int id = Int32.Parse(a);
-                nametb.Text = name;
-                idtb.Text = id.ToString();
-                mailtb.Text = mail;
+                userInfo.Name = dr["pname"].ToString();
+                userInfo.Username = dr["username"].ToString();
+                userInfo.Email = dr["mail"].ToString();
+                userInfo.Id = Int32.Parse(dr["id"].ToString());
+
+                nametb.Text = userInfo.Username;
+                idtb.Text = userInfo.Id.ToString();
+                mailtb.Text = userInfo.Email;
             }
 
-            ListViewItem item = new ListViewItem();
-            item.Content = "Ahmet";
-            listView.Items.Add(item);
+            con.Close();
+
+            fillUserMotions();
+        }
+
+        private void fillUserMotions() {
+            OleDbConnection con;
+            OleDbCommand cmd;
+            OleDbDataReader dr;
+
+            con = new OleDbConnection("Provider=Microsoft.ACE.Oledb.12.0;Data Source=login.accdb");
+            cmd = new OleDbCommand();
+            con.Open();
+            cmd.Connection = con;
+            string sql = "SELECT c.cat_name, m.motion_name, m.description, m.id, m.path, m.frame_no, m.repetition FROM category c, user_motion um, motion m, users u where m.category_id = c.id and u.id = um.user_id and m.id = um.motion_id and u.username = '" + userInfo.Username + "'";
+            cmd.CommandText = sql;
+            dr = cmd.ExecuteReader();
+
+            Console.WriteLine(sql);
+
+            while (dr.Read())
+            {
+                Console.WriteLine(dr);
+                MotionItem mi = new MotionItem();
+                mi.Id = Int32.Parse(dr["id"].ToString());
+                mi.MotionName = dr["motion_name"].ToString();
+                mi.Category = dr["cat_name"].ToString();
+                mi.Description = dr["description"].ToString();
+                mi.Path = dr["path"].ToString();
+                mi.FrameNo = Int32.Parse(dr["frame_no"].ToString());
+                mi.Repetition = Int32.Parse(dr["repetition"].ToString());
+                motionList.Items.Add(mi);
+            }
+
+            con.Close();
         }
 
         private void enablebtn_Click(object sender, RoutedEventArgs e)
@@ -182,11 +233,13 @@ namespace Team7Senior
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            Team7Senior.PoseMatchingPage pm = new Team7Senior.PoseMatchingPage();
+            MotionItem mi = (MotionItem)motionList.SelectedItem;
+            Team7Senior.PoseMatchingPage pm = new Team7Senior.PoseMatchingPage(mi, userInfo);
             pm.Show();
             this.Close();
         }
 
+      
        
     }
 }

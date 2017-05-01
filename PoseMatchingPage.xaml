@@ -6,31 +6,29 @@
       xmlns:local="clr-namespace:Team7Senior"
       xmlns:controls="clr-namespace:LightBuzz.Vitruvius.Controls;assembly=LightBuzz.Vitruvius"
       mc:Ignorable="d"
-      d:DesignHeight="300" d:DesignWidth="900"
+      d:DesignHeight="400" d:DesignWidth="900"
       Title="PoseMatchingPage"
-      Unloaded="Page_Unloaded" WindowState="Minimized" ResizeMode="NoResize">
+      Unloaded="Page_Unloaded" WindowState="Minimized" ResizeMode="CanMinimize">
 
     <Window.Background>
         <ImageBrush ImageSource="img/back.jpg"/>
     </Window.Background>
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
 
-        <!-- Back button and page title -->
-        <Grid Grid.Column="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <Canvas HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button Content="Back" 
+                Click="Button_Click_2"
+                FontWeight="Bold" Height="28" Canvas.Left="27" Canvas.Top="15" Width="77"/>
+            <Image x:Name="image" 
+               Source="img/logo.png" 
+               HorizontalAlignment="Center" 
+               Height="93" 
+               VerticalAlignment="Top" Width="227" Canvas.Left="458" Canvas.Top="7"/>
             
-            <TextBlock x:Name="pageTitle" Text="Pose Matching" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1"
-                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Center" />
-        </Grid>
-
+        </Canvas>
+           
+        
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.5*" />
@@ -40,8 +38,7 @@
             <controls:KinectViewer x:Name="viewer2" Grid.Column="1" />
 
         </Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Height="37" Margin="812,193,0,0" Grid.Row="1" VerticalAlignment="Top" Width="66" Click="Button_Click_1"/>
-        <Button Style="{StaticResource ButtonCommonStyle}" Content="Start Pose" Margin="16,0,0,8.4" Padding="30,8" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" RenderTransformOrigin="0.5,0.5" Height="28" Width="106"/>
-        <Button Style="{StaticResource ButtonCommonStyle}" Content="Stop Pose" Margin="607,0,0,4.4" Padding="30,8" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="1" />
+
+       
     </Grid>
 </Window>
