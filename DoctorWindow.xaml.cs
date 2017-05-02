@@ -21,8 +21,6 @@ using System.Text.RegularExpressions;
 namespace Team7Senior
 {
 
-     
-   
     public class MyItem 
     {
         public int Id { get; set; }
@@ -137,7 +135,7 @@ namespace Team7Senior
             }
 
 
-            Regex regexName = new Regex(@"^[a-zA-Z][a-zA-Z\._\-]{2,22}?[a-zA-Z]{0,2}$");
+            Regex regexName = new Regex(@"^[a-zA-Z][a-zA-Z\._\-\s*]{2,22}?[a-zA-Z]{0,2}$");
             Match nameMatch = regexName.Match(name);
             if (!nameMatch.Success)
             {
@@ -183,13 +181,15 @@ namespace Team7Senior
         private void addbutton_Click(object sender, RoutedEventArgs e) 
         {
             OleDbConnection con;
-            OleDbCommand cmd;
+            OleDbCommand cmd,cmd2;
             
 
             con = new OleDbConnection("Provider=Microsoft.ACE.Oledb.12.0;Data Source=login.accdb");
             cmd = new OleDbCommand();
+            cmd2 = new OleDbCommand();
             con.Open();
             cmd.Connection = con;
+            cmd2.Connection = con;
 
             bool mailVal = mailValidation(mailtxt.Text);
             bool patientVal = patientDetailsValidation(unametxt.Text, nametxt.Text);
@@ -206,11 +206,15 @@ namespace Team7Senior
             {
                 if(passwdtxt.Password == cpasswdtxt.Password )
                 {
-                    cmd.CommandText = "insert into users(username,upassword,pname,mail) Values('" + unametxt.Text + "','" + passwdtxt.Password + "','" + nametxt.Text + "','" + mailtxt.Text + "')";
-                    String variable = (string)cmd.ExecuteScalar();
-                    MessageBox.Show("Patient Added Successfully...");
-                    clear_Text();
-                    refreshList();
+                    
+                 
+                        cmd.CommandText = "insert into users(username,upassword,pname,mail) Values('" + unametxt.Text + "','" + passwdtxt.Password + "','" + nametxt.Text + "','" + mailtxt.Text + "')";
+                        String variable = (string)cmd.ExecuteScalar();
+                        MessageBox.Show("Patient Added Successfully...");
+                        clear_Text();
+                        refreshList();
+                    
+                    
                 }
                 else
                 {
@@ -234,39 +238,7 @@ namespace Team7Senior
         }
 
 
-        private void savebtn_Click(object sender, RoutedEventArgs e)
-        {
-            Boolean x1, x2, x3, x4, x5, x6;
-            OleDbConnection con;
-            OleDbCommand cmd;
-
-            
-
-
-            con = new OleDbConnection("Provider=Microsoft.ACE.Oledb.12.0;Data Source=login.accdb");
-            cmd = new OleDbCommand();
-            con.Open();
-            cmd.Connection = con;
-            
-
-
-            var selectedItem = (dynamic)listView.SelectedItems[0];
-            String selectedcmb = selectedItem.Name;
-
-            cmd.CommandText = "update users set [shoulder] = ?, [knee] = ?, [neck] = ?, [arm] = ?, [stretch] = ?, [hip] = ? where pname=? ";
-            cmd.Parameters.AddWithValue("?", selectedcmb);
-            cmd.ExecuteNonQuery();
-
-
-            
-
-
-            MessageBox.Show("Patient Motions Modified Successfully...");
-
-
-            con.Close();
-        }
-
+ 
         private void delbutton_Click(object sender, RoutedEventArgs e)
         {
             OleDbConnection con;
@@ -283,6 +255,8 @@ namespace Team7Senior
             String variable = (string)cmd.ExecuteScalar();
             MessageBox.Show("Patient Deleted Successfully...");
             clear_Text();
+            nametb.Clear();
+            mailtb.Clear();
             
             con.Close();
             refreshList();       
@@ -295,9 +269,6 @@ namespace Team7Senior
             Team7Senior.SaveMotion sm = new Team7Senior.SaveMotion();
             sm.Show();
             this.Close();
-           
-
-            //this.Close();
         }
 
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)

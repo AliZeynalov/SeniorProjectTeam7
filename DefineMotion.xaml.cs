@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Data.OleDb;
 using System.Data;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace Team7Senior
 {
@@ -41,6 +42,9 @@ namespace Team7Senior
             refreshList();
         }
 
+       
+
+       
         //public void connectDB()
         //{
         //    con = new OleDbConnection("Provider=Microsoft.ACE.Oledb.12.0;Data Source=login.accdb");
@@ -130,8 +134,17 @@ namespace Team7Senior
             int numberOfFrames = savedPose.Count;
             int category_id = getCategoryId(cat_name);
             string path = resources + "\\" + name + "\\";
-            int repet =Int32.Parse(repetition.Text);
-
+            int parsedValue;
+            int repet;
+            if (!int.TryParse(repetition.Text, out parsedValue))
+            {
+                MessageBox.Show("This is a number only field");
+                return;
+            }
+            else {
+                repet = Int32.Parse(repetition.Text);
+            }
+      
             bool exists = System.IO.Directory.Exists(path);
             if (!exists)
                 System.IO.Directory.CreateDirectory(path);
@@ -153,8 +166,10 @@ namespace Team7Senior
             con.Open();
            
             cmd.Connection = con;
+            
 
             cmd.CommandText = "insert into motion(motion_name,path,frame_no,description,category_id, repetition) Values('" + name + "','" + path + "'," + numberOfFrames + ",'" + description + "'," + category_id + ", " + repet + ")";
+            
             cmd.ExecuteNonQuery();
 
             cmd.CommandText = "SELECT TOP 1 id FROM motion ORDER BY id DESC";

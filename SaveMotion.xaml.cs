@@ -76,6 +76,8 @@ public partial class SaveMotion : Window
                 {
                     _currentBody = frame.Bodies().Closest();
 
+                    
+
                     if (_currentBody != null)
                     {
                         var recording_brush = Brushes.Green;
@@ -132,7 +134,15 @@ public partial class SaveMotion : Window
 
         private void Start_Click(object sender, RoutedEventArgs e)
         {
-            if (_mode == RecordingMode.Stopped && _currentBody != null)
+            if (_currentBody == null)
+            {
+
+                MessageBox.Show("KINECT CANNOT READ CURRENT BODY SO YOU CANNOT SAVE MOTION! TRY AGAIN!");
+               
+                
+            }
+
+            else if (_mode == RecordingMode.Stopped && _currentBody != null)
             {
                 _mode = RecordingMode.Started;
             }
@@ -140,9 +150,17 @@ public partial class SaveMotion : Window
 
         private void Stop_Click(object sender, RoutedEventArgs e)
         {
-            if (_mode == RecordingMode.Started && _currentBody != null)
+            if (_currentBody == null)
+            {
+
+                MessageBox.Show("KINECT CANNOT READ CURRENT BODY SO YOU CANNOT SAVE MOTION! TRY AGAIN!");
+               
+
+            } 
+            else if (_mode == RecordingMode.Started && _currentBody != null)
             {
                 _mode = RecordingMode.Stopped;
+                MessageBox.Show("Motion saved successfully...");
               
             }
             Team7Senior.DefineMotion dm = new Team7Senior.DefineMotion(savedPose);

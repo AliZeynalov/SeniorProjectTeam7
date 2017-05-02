@@ -125,16 +125,26 @@ namespace Team7Senior
 
             MyItem patient = (MyItem)patientList.SelectedItem;
             MyMotionItem motion = (MyMotionItem)motionList.SelectedItem;
-            Console.WriteLine(patient.Id);
-            Console.WriteLine(motion.Id);
+            //Console.WriteLine(patient.Id);
+            //Console.WriteLine(motion.Id);
+
+            try {
+
+                cmd.CommandText = "insert into user_motion(user_id,motion_id) Values(" + patient.Id + "," + motion.Id + ")";
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("Motion Added Successfully...");
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("This motion is already assigned this patient!");
+            }
+            finally
+            {
+                con.Close();
+            }
 
             
-            cmd.CommandText = "insert into user_motion(user_id,motion_id) Values(" + patient.Id + "," + motion.Id + ")";
-            cmd.ExecuteNonQuery();
-
-            MessageBox.Show("Motion Added Successfully...");
-
-            con.Close();
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
