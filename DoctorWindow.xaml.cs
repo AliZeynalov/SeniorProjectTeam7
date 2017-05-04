@@ -178,6 +178,31 @@ namespace Team7Senior
             return true;
         }
 
+
+
+        private bool SameUsername(String uname)
+        {
+            OleDbConnection con;
+            OleDbCommand cmd;
+            OleDbDataReader dr;
+            con = new OleDbConnection("Provider=Microsoft.ACE.Oledb.12.0;Data Source=login.accdb");
+            cmd = new OleDbCommand();
+            con.Open();
+            cmd.Connection = con;
+            cmd.CommandText = "select * from users where username='" + uname + "'";
+            dr = cmd.ExecuteReader();
+
+            if (dr.Read())
+            {
+                MessageBox.Show("There is already a user with typed username");
+                return false;
+            }
+
+
+            return true;
+        }
+
+
         private void addbutton_Click(object sender, RoutedEventArgs e) 
         {
             OleDbConnection con;
@@ -201,6 +226,12 @@ namespace Team7Senior
             {
                 return;
             }
+            else if (!SameUsername(unametxt.Text))
+            {
+                return;
+            }
+
+
 
             if (nametxt.Text != "" && mailtxt.Text != "" && unametxt.Text != "" && passwdtxt.Password != "" && cpasswdtxt.Password != "")
             {

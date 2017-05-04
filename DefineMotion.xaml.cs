@@ -141,7 +141,8 @@ namespace Team7Senior
                 MessageBox.Show("This is a number only field");
                 return;
             }
-            else {
+            else
+            {
                 repet = Int32.Parse(repetition.Text);
             }
       
@@ -178,10 +179,23 @@ namespace Team7Senior
             cmd.CommandText = "Select @@Identity";
             int mot_id = (int)cmd.ExecuteScalar();
 
+            
             if (mot_id != -1)
             {
+
+                try
+                 {
                 cmd.CommandText = "insert into user_motion(user_id,motion_id) Values(" + chosenId + "," + mot_id + ")";
                 cmd.ExecuteNonQuery();
+                 }
+                catch (Exception ex)
+                {
+
+                   
+                }
+               
+                
+                
             }
 
             MessageBox.Show("Motion Added Successfully...");
@@ -229,7 +243,9 @@ namespace Team7Senior
 
         private void savebtn_Click(object sender, RoutedEventArgs e)
         {
+           
             ComboBoxItem selected_item = (ComboBoxItem)category_combo.SelectedItem;
+           
             string cat_name = (string)selected_item.Content;
             string mot_name = motion_name.Text;
             string desc = description.Text;

@@ -55,6 +55,7 @@ namespace Team7Senior
             InitializeComponent();
 
             motion = mi;
+            Console.WriteLine(motion.Repetition);
             userInfo = ui;
 
             readFromFile();
@@ -87,7 +88,8 @@ namespace Team7Senior
         }
 
         private void change() {
-            
+            //if (current_rate_counter % 10 != 0) { return; }
+            Console.WriteLine(repetition);
             if (current_pose == first_pose)
             {
                 current_pose = last_pose;
@@ -178,7 +180,7 @@ namespace Team7Senior
                 {
                     _currentBody = frame.Bodies().Closest();
 
-
+                    //current_rate_counter = (current_rate_counter + 1) % 10;
                     // counter++;
                     //if (counter >= savedPose.Count)
                     //{
